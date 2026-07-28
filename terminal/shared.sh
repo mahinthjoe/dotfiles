@@ -70,6 +70,15 @@ if [ -f "/opt/homebrew/bin/brew" ] && [ -z "${HOMEBREW_PREFIX:-}" ]; then
   export HOMEBREW_CURLRC=1
 fi
 
+# User-installed tools (claude, codex, ...). zsh never reads ~/.profile, so
+# this must happen here for both shells.
+if [ -d "$HOME/.local/bin" ]; then
+  case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+  esac
+fi
+
 # Disable the less history file.
 export LESSHISTFILE='-'
 
